@@ -1,0 +1,25 @@
+{
+  "name": "iw1-firechat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "NODE_ENV=development npx snowpack dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@jadex/snowpack-plugin-tailwindcss-jit": "^0.3.0",
+    "@snowpack/plugin-postcss": "^1.4.3",
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.5",
+    "snowpack": "^3.7.1",
+    "tailwindcss": "^2.2.4"
+  },
+  "dependencies": {
+    "firebase": "^8.7.0",
+    "lit": "^2.0.0-rc.2",
+    "page": "^1.11.6"
+  }
+}
