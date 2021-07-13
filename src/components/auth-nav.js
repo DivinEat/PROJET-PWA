@@ -27,19 +27,13 @@ class AuthNav extends Base {
       <ul class="flex">
         ${firebase.auth().currentUser
           ? html` <li class="mr-6">
-                <a class="text-blue-500 hover:text-blue-800" href="/login"
-                  >Login</a
-                >
+                <a href="/login">Login</a>
               </li>
               <li class="mr-6">
-                <a class="text-blue-500 hover:text-blue-800" href="/register"
-                  >Register</a
-                >
+                <a href="/register">Register</a>
               </li>`
           : html`<li class="mr-6">
-              <a class="text-blue-500 hover:text-blue-800" href="/logout"
-                >Logout</a
-              >
+              <a href="/logout">Logout</a>
             </li>`}
       </ul>
     `;

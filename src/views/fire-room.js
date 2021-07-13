@@ -49,6 +49,9 @@ class FireRoom extends Base {
           )}
         </ul>
       </main>
+      <form method="post">
+        <textarea id="googledoc"></textarea>
+      </form>
       <footer class="h-16 bg-gray-300 fixed bottom-0 inset-x-0">
         <form
           @submit="${this.handleForm}"

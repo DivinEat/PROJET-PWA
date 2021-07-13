@@ -58,14 +58,12 @@ class FireApp extends Base {
   }
 
   handleCreateRoom({ detail }) {
-    console.log(detail);
     const id = pushData("/rooms", detail);
     setData(`/messages/${id}`, [{ message: "Plop is the new plop" }]);
     page(`/${id}`);
   }
 
   handleCreateMessage({ detail }) {
-    console.log(detail);
     const id = document.$route.params.roomId;
     appendData(`/messages/${id}`, detail);
   }
