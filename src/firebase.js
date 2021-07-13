@@ -47,6 +47,11 @@ export function setData(path = "/", data) {
   return database.ref(path).set(data);
 }
 
+export function appendData(path = "/", data) {
+  const database = firebase.database();
+  return database.ref().child(path).push(data);
+}
+
 export function createUser(email, password) {
   const auth = firebase.auth();
 
