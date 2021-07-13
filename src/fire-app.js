@@ -8,6 +8,7 @@ import {
   setData,
   createUser,
   connectUser,
+  disconnectUser,
   appendData,
 } from "./firebase.js";
 

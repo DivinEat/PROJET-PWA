@@ -1,4 +1,5 @@
 import firebase from "firebase/app";
+import page from "page";
 
 import "firebase/database";
 import "firebase/auth";
@@ -63,6 +64,8 @@ export function createUser(email, password) {
       setData(`/users/${user.uid}`, {
         email,
       });
+
+      page(`/`);
       // ...
     })
     .catch((error) => {
@@ -80,6 +83,8 @@ export function connectUser(email, password) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
+
+      page(`/`);
       // ...
     })
     .catch((error) => {
@@ -96,7 +101,8 @@ export function disconnectUser() {
     .signOut()
     .then(() => {
       // Sign-out successful.
-      console.log("Sign-out successful");
+
+      page(`/login`);
     })
     .catch((error) => {
       var errorCode = error.code;

@@ -1,5 +1,5 @@
 import page from "page";
-import { initFirebase } from "./firebase";
+import { initFirebase, disconnectUser } from "./firebase";
 
 initFirebase();
 
@@ -22,6 +22,13 @@ page("/login", (ctx) => {
   document.$route = ctx;
   document.dispatchEvent(new CustomEvent("page-changed", { detail: ctx }));
   import("./views/fire-login.js");
+});
+
+page("/logout", (ctx) => {
+  ctx.name = "logout";
+  document.$route = ctx;
+  document.dispatchEvent(new CustomEvent("page-changed", { detail: ctx }));
+  disconnectUser();
 });
 
 page("/:roomId", (ctx) => {
