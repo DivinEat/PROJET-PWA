@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import page from 'page';
 import Base from './Base.js';
 
-import { subscribeList, pushData, setData } from './firebase.js';
+import { subscribeList, pushData, setData, createUser } from './firebase.js';
 
 class FireApp extends Base {
 
@@ -56,6 +56,11 @@ class FireApp extends Base {
     page(`/${id}`);
   } 
 
+  login({ detail }) {
+    const { email, password } = detail;
+    createUser(email, password);
+  }
+
   displayPage() {
     switch(this.page) {
       case 'list':
@@ -69,12 +74,18 @@ class FireApp extends Base {
           this.messages = message;
         });
         return this.getRoomPage();
+      case 'login':
+        return this.getLoginPage();
       default:
         subscribeList('/rooms', (rooms) => {
           this.rooms = rooms;
         });
         return this.getListPage();
     }
+  }
+
+  getLoginPage() {
+    return html`<fire-login @login="${this.login}"></fire-login>`
   }
 
   getListPage() {

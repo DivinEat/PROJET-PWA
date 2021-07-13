@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 
 import 'firebase/database';
+import 'firebase/auth';
 
 export function initFirebase() {
   firebase.initializeApp({
@@ -39,4 +40,22 @@ export function pushData(path = '/', data) {
 export function setData(path = '/', data) {
   const database = firebase.database();
   return database.ref(path).set(data);
+}
+
+export function createUser(email, password) {
+  const auth = firebase.auth();
+
+  return auth.createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      setData(`/users/${user.uid}`, {
+        email
+      });
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
 }
