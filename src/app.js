@@ -10,6 +10,13 @@ page("/", (ctx) => {
   import("./views/fire-list.js");
 });
 
+page("/register", (ctx) => {
+  ctx.name = "register";
+  document.$route = ctx;
+  document.dispatchEvent(new CustomEvent("page-changed", { detail: ctx }));
+  import("./views/fire-register.js");
+});
+
 page("/login", (ctx) => {
   ctx.name = "login";
   document.$route = ctx;

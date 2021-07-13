@@ -59,7 +59,7 @@ class FireList extends Base {
                 @input="${(e) => (this.roomName = e.target.value)}"
                 class="py-3 px-4 rounded-sm w-full h-full outline-none border-b-2"
                 type="text"
-                placeholder="Create a new room ..."
+                placeholder="Create a new google doc ..."
                 name="Room name"
               />
             </label>

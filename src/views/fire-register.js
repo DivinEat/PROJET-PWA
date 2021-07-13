@@ -1,7 +1,7 @@
 import { LitElement, html, css } from "lit";
 import Base from "../Base.js";
 
-class FireLogin extends LitElement {
+class FireRegister extends LitElement {
   static get styles() {
     return css`
       :host {
@@ -29,10 +29,10 @@ class FireLogin extends LitElement {
     this.password = "";
   }
 
-  login(e) {
+  register(e) {
     e.preventDefault();
     this.dispatchEvent(
-      new CustomEvent("login", {
+      new CustomEvent("register", {
         detail: {
           email: this.email,
           password: this.password,
@@ -43,7 +43,7 @@ class FireLogin extends LitElement {
 
   render() {
     return html`
-      <form @submit="${this.login}" class="px-4">
+      <form @submit="${this.register}" class="px-4">
         <div>
           <input
             class="block w-full"
@@ -60,10 +60,10 @@ class FireLogin extends LitElement {
             @input="${(e) => (this.password = e.target.value)}"
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     `;
   }
 }
 
-customElements.define("fire-login", FireLogin);
+customElements.define("fire-register", FireRegister);

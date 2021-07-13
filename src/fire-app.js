@@ -7,6 +7,7 @@ import {
   pushData,
   setData,
   createUser,
+  connectUser,
   appendData,
 } from "./firebase.js";
 
@@ -68,9 +69,14 @@ class FireApp extends Base {
     appendData(`/messages/${id}`, detail);
   }
 
-  login({ detail }) {
+  register({ detail }) {
     const { email, password } = detail;
     createUser(email, password);
+  }
+
+  login({ detail }) {
+    const { email, password } = detail;
+    connectUser(email, password);
   }
 
   displayPage() {
@@ -89,6 +95,8 @@ class FireApp extends Base {
           }
         );
         return this.getRoomPage();
+      case "register":
+        return this.getRegisterPage();
       case "login":
         return this.getLoginPage();
       default:
@@ -97,6 +105,10 @@ class FireApp extends Base {
         });
         return this.getListPage();
     }
+  }
+
+  getRegisterPage() {
+    return html`<fire-register @register="${this.register}"></fire-register>`;
   }
 
   getLoginPage() {

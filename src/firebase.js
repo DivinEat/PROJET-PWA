@@ -68,5 +68,39 @@ export function createUser(email, password) {
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
+}
+
+export function connectUser(email, password) {
+  const auth = firebase.auth();
+
+  return auth
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
+}
+
+export function disconnectUser() {
+  const auth = firebase.auth();
+
+  return auth
+    .signOut()
+    .then(() => {
+      // Sign-out successful.
+      console.log("Sign-out successful");
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage);
     });
 }
