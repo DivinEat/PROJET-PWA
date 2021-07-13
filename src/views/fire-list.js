@@ -3,7 +3,7 @@ import { LitElement, html, css } from "lit";
 import page from "page";
 
 import Base from "../Base";
-import "../components/room-card.js";
+import "../components/doc-card.js";
 
 class FireList extends Base {
   static get styles() {
@@ -16,11 +16,11 @@ class FireList extends Base {
 
   static get properties() {
     return {
-      roomName: {
+      docName: {
         type: Array,
         state: true,
       },
-      rooms: {
+      docs: {
         type: Array,
       },
     };
@@ -28,39 +28,39 @@ class FireList extends Base {
 
   constructor() {
     super();
-    this.roomName = "";
-    this.rooms = [];
+    this.docName = "";
+    this.docs = [];
   }
 
-  createRoom(e) {
+  createDoc(e) {
     e.preventDefault();
-    if (!this.roomName) return;
+    if (!this.docName) return;
     this.dispatchEvent(
-      new CustomEvent("create-room", {
+      new CustomEvent("create-doc", {
         detail: {
-          name: this.roomName,
+          name: this.docName,
           createdAt: Date.now(),
         },
       })
     );
 
-    this.roomName = "";
+    this.docName = "";
   }
 
   render() {
     return html`
       <section>
         <header class="px-4 py-4">
-          <form @submit="${this.createRoom}" class="h-8 flex items-center">
+          <form @submit="${this.createDoc}" class="h-8 flex items-center">
             <label class="flex-1" aria-label="Add todo input">
               <input
                 autocomplete="off"
-                .value="${this.roomName}"
-                @input="${(e) => (this.roomName = e.target.value)}"
+                .value="${this.docName}"
+                @input="${(e) => (this.docName = e.target.value)}"
                 class="py-3 px-4 rounded-sm w-full h-full outline-none border-b-2"
                 type="text"
                 placeholder="Create a new google doc ..."
-                name="Room name"
+                name="Doc name"
               />
             </label>
             <button
@@ -74,8 +74,8 @@ class FireList extends Base {
         </header>
         <main class="mt-4 px-4">
           <ul class="space-y-4">
-            ${this.rooms.map(
-              (room) => html` <li><room-card .room="${room}"></room-card></li> `
+            ${this.docs.map(
+              (doc) => html` <li><doc-card .doc="${doc}"></doc-card></li> `
             )}
           </ul>
         </main>

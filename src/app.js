@@ -31,11 +31,11 @@ page("/logout", (ctx) => {
   disconnectUser();
 });
 
-page("/:roomId", (ctx) => {
-  ctx.name = "room";
+page("/:docId", (ctx) => {
+  ctx.name = "doc";
   document.$route = ctx;
   document.dispatchEvent(new CustomEvent("page-changed", { detail: ctx }));
-  import("./views/fire-room.js");
+  import("./views/fire-doc.js");
 });
 
 page();

@@ -4,7 +4,7 @@ import Base from "../Base.js";
 
 import {} from "../firebase.js";
 
-class FireRoom extends Base {
+class FireDoc extends Base {
   static get properties() {
     return {
       message: {
@@ -82,4 +82,4 @@ class FireRoom extends Base {
   }
 }
 
-customElements.define("fire-room", FireRoom);
+customElements.define("fire-doc", FireDoc);

@@ -27,11 +27,11 @@ class FireApp extends Base {
         type: String,
         state: true,
       },
-      rooms: {
+      docs: {
         type: Array,
         state: true,
       },
-      room: {
+      doc: {
         type: Object,
         state: true,
       },
@@ -45,8 +45,8 @@ class FireApp extends Base {
   constructor() {
     super();
     this.messages = [];
-    this.rooms = [];
-    this.room = {};
+    this.docs = [];
+    this.doc = {};
 
     document.addEventListener("page-changed", ({ detail }) => {
       this.page = detail.name;
@@ -57,14 +57,14 @@ class FireApp extends Base {
     this.page = document.$route.name;
   }
 
-  handleCreateRoom({ detail }) {
-    const id = pushData("/rooms", detail);
+  handleCreateDoc({ detail }) {
+    const id = pushData("/docs", detail);
     setData(`/messages/${id}`, [{ message: "Plop is the new plop" }]);
     page(`/${id}`);
   }
 
   handleCreateMessage({ detail }) {
-    const id = document.$route.params.roomId;
+    const id = document.$route.params.docId;
     appendData(`/messages/${id}`, detail);
   }
 
@@ -81,26 +81,26 @@ class FireApp extends Base {
   displayPage() {
     switch (this.page) {
       case "list":
-        subscribeList("/rooms", (rooms) => {
-          this.rooms = rooms;
+        subscribeList("/docs", (docs) => {
+          this.docs = docs;
         });
         return this.getListPage();
-      case "room":
+      case "doc":
         this.messages = [];
         subscribeList(
-          `/messages/${document.$route.params.roomId}`,
+          `/messages/${document.$route.params.docId}`,
           (message) => {
             this.messages = message;
           }
         );
-        return this.getRoomPage();
+        return this.getDocPage();
       case "register":
         return this.getRegisterPage();
       case "login":
         return this.getLoginPage();
       default:
-        subscribeList("/rooms", (rooms) => {
-          this.rooms = rooms;
+        subscribeList("/docs", (docs) => {
+          this.docs = docs;
         });
         return this.getListPage();
     }
@@ -116,21 +116,21 @@ class FireApp extends Base {
 
   getListPage() {
     return html` <fire-list
-      .rooms="${this.rooms}"
-      @create-room=${this.handleCreateRoom}
+      .docs="${this.docs}"
+      @create-doc=${this.handleCreateDoc}
     ></fire-list>`;
   }
 
-  getRoomPage() {
-    return html` <fire-room
-      .room="${this.room}"
+  getDocPage() {
+    return html` <fire-doc
+      .doc="${this.doc}"
       .messages="${this.messages}"
       @create-message=${this.handleCreateMessage}
-    ></fire-room>`;
+    ></fire-doc>`;
   }
 
   displayReturn() {
-    return this.page === "room";
+    return this.page === "doc";
   }
 
   goBack() {
