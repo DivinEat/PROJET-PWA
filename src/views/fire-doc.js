@@ -28,6 +28,8 @@ class FireDoc extends Base {
   handleForm(e) {
     e.preventDefault();
 
+    console.log(this.message);
+
     if (!this.message) return;
     this.dispatchEvent(
       new CustomEvent("create-message", {
@@ -49,8 +51,29 @@ class FireDoc extends Base {
           )}
         </ul>
       </main>
-      <form method="post">
-        <textarea id="googledoc"></textarea>
+      <form @submit="${this.handleForm}">
+        <textarea
+          id="googledoc"
+          @onchange="${(e) => console.log("test")}"
+          .value="${this.message}"
+        >
+        </textarea>
+        <input
+          @onchange="${(e) => console.log("test")}"
+          autocomplete="off"
+          .value="${this.message}"
+          class="py-3 px-4 rounded-sm w-full h-full"
+          type="text"
+          placeholder="Enter a new message ..."
+          name="message"
+        />
+        <button
+          aria-label="Add"
+          class="ml-4 rounded-lg text-uppercase bg-blue-400 h-full text-center px-3 uppercase text-white font-bold flex justify-center items-center"
+          type="submit"
+        >
+          Save
+        </button>
       </form>
       <footer class="h-16 bg-gray-300 fixed bottom-0 inset-x-0">
         <form
