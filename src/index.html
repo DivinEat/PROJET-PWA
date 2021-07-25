@@ -19,6 +19,7 @@
     <header class="sticky top-0 h-12 bg-blue-400 flex items-center justify-center text-white font-bold text-xl px-4 py-3 z-10">
       <div class="h-full w-full flex flex-row justify-between">
         <div></div>
+        <input type="hidden" id="content" value="test"/>
         <a href="/">Google doc</a>
         <auth-nav></auth-nav>
       </div>
@@ -28,6 +29,17 @@
   <script src="./app.js" type="module"></script>
   <script src="./fire-app.js" type="module"></script>
   <script src="./components/auth-nav.js" type="module"></script>
+  <script>
+    function setupEditor(editor) {
+      editor.on('keypress', function (e) {
+        let content = '';
+        e.target.childNodes.forEach((node) => {
+            content += node.outerHTML;
+        });
+        document.getElementById('content').value = content;
+      });
+    }
+  </script>
 
    <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-webcomponent@1/dist/tinymce-webcomponent.min.js"></script>
 </body>

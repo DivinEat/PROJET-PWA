@@ -36,6 +36,24 @@ export function subscribeList(path = "/", cb = () => {}) {
     });
 }
 
+export function subscribeDoc(path = "/", cb = () => {}) {
+  const database = firebase.database();
+
+  // database
+  //     .ref()
+  //     .child(path)
+  //     .on("child_added", (data) => {
+  //       cb(data);
+  //     });
+  // database
+  //     .ref()
+  //     .child(path)
+  //     .on("child_removed", (data) => {
+  //       cb(data);
+  //     });
+
+}
+
 export function pushData(path = "/", data) {
   const database = firebase.database();
   const key = database.ref().child(path).push().key;

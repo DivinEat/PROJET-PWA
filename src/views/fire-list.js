@@ -40,13 +40,13 @@ class FireList extends Base {
         detail: {
           name: this.docName,
           createdAt: Date.now(),
+          content: "",
         },
       })
     );
 
     this.docName = "";
   }
-
   render() {
     return html`
       <section>
