@@ -92,11 +92,10 @@ class FireApp extends Base {
         return this.getListPage();
       case "doc":
         this.doc = null;
+
         subscribeDoc(
-          `/doc/${document.$route.params.docId}`,
+          `/docs/${document.$route.params.docId}`,
           (doc) => {
-            console.log("doc");
-            console.log(doc);
             this.doc = doc;
           }
         );
@@ -131,7 +130,7 @@ class FireApp extends Base {
   getDocPage() {
     return html` <fire-doc
       .doc="${this.doc}"
-      @create-message=${this.handleUpdateDoc}
+      @create-doc=${this.handleUpdateDoc}
     ></fire-doc>`;
   }
 

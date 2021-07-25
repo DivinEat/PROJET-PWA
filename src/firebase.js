@@ -24,13 +24,15 @@ export function subscribeList(path = "/", cb = () => {}) {
     .ref()
     .child(path)
     .on("child_added", (data) => {
-      list.push(data);
+        console.log("Child added");
+        list.push(data);
       cb(list);
     });
   database
     .ref()
     .child(path)
     .on("child_removed", (data) => {
+      console.log("Child removed");
       list = list.filter((item) => item.key !== data.key);
       cb(list);
     });
@@ -38,20 +40,26 @@ export function subscribeList(path = "/", cb = () => {}) {
 
 export function subscribeDoc(path = "/", cb = () => {}) {
   const database = firebase.database();
+  database.ref(path)
+  .on('value', (snapshot) => {
+      console.log("snapshot");
+      console.log(snapshot.val())
+    cb(snapshot.val());
+  });
+
 
   // database
   //     .ref()
   //     .child(path)
-  //     .on("child_added", (data) => {
-  //       cb(data);
+  //     .on("child_changed", (snapshot) => {
+  //       cb(snapshot.val());
   //     });
   // database
   //     .ref()
   //     .child(path)
-  //     .on("child_removed", (data) => {
-  //       cb(data);
+  //     .on("child_removed", (snapshot) => {
+  //       cb(snapshot.val());
   //     });
-
 }
 
 export function pushData(path = "/", data) {

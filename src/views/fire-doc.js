@@ -25,7 +25,7 @@ class FireDoc extends Base {
     this.doc.content = content;
 
     this.dispatchEvent(
-        new CustomEvent("create-message", {
+        new CustomEvent("create-doc", {
           detail: this.doc,
         })
     );
@@ -36,7 +36,7 @@ class FireDoc extends Base {
       <main>
         <form @submit="${this.handleForm}" id="doc-form">
           <tinymce-editor api-key="9s7bb5gzs4o95vlvmekvp2acp19hf9p0zfcp4441fkft2tiw" 
-                          setup="setupEditor" height="500">
+                          setup="setupEditor" height="500">${this.doc.content}
           </tinymce-editor>
           
           <footer class="h-16 bg-gray-300 fixed bottom-0 inset-x-0">
