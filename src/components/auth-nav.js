@@ -14,7 +14,11 @@ class AuthNav extends Base {
   }
 
   static get properties() {
-    return {};
+    return {
+      user: {
+        type: Object,
+      },
+    };
   }
 
   constructor() {
@@ -22,22 +26,31 @@ class AuthNav extends Base {
   }
 
   render() {
-    console.log(firebase.auth());
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    });
+
     return html`
       <ul class="flex">
-        ${firebase.auth().currentUser
-          ? html` <li class="mr-6">
+        ${this.user
+          ? html`
+              <li class="mr-6">
+                <a href="/logout">Logout</a>
+              </li>`
+          : html`
+              <li class="mr-6">
                 <a href="/login">Login</a>
               </li>
               <li class="mr-6">
                 <a href="/register">Register</a>
               </li>`
-          : html`<li class="mr-6">
-              <a href="/logout">Logout</a>
-            </li>`}
+          }
       </ul>
     `;
   }
 }
-
 customElements.define("auth-nav", AuthNav);

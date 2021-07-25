@@ -89,6 +89,7 @@ export function createUser(email, password) {
       const user = userCredential.user;
       setData(`/users/${user.uid}`, {
         email,
+        password,
       });
 
       page(`/`);
@@ -101,22 +102,39 @@ export function createUser(email, password) {
     });
 }
 
+// firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+//     .then(() => {
+//         // Existing and future Auth states are now persisted in the current
+//         // session only. Closing the window would clear any existing state even
+//         // if a user forgets to sign out.
+//         // ...
+//         // New sign-in will be persisted with session persistence.
+//         return firebase.auth().signInWithEmailAndPassword(email, password);
+//     })
+//     .catch((error) => {
+//         // Handle Errors here.
+//         var errorCode = error.code;
+//         var errorMessage = error.message;
+//     });
+
+
 export function connectUser(email, password) {
   const auth = firebase.auth();
 
-  return auth
-    .signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-
-      page(`/`);
-      // ...
+  return auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(() => {
+        return auth
+        .signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          page(`/`);
+        })
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
     });
 }
 
