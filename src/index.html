@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google doc</title>
-  <style>
-    html, body {
-      height: 100%;
-      min-height: 100vh;
-      font-family: sans-serif;
-    }
-  </style>
-  <link rel="stylesheet" href="./assets/css/tailwind.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google doc</title>
+    <style>
+        html, body {
+            height: 100%;
+            min-height: 100vh;
+            font-family: sans-serif;
+        }
+    </style>
+    <link rel="stylesheet" href="./assets/css/tailwind.css">
 </head>
 <body>
-  <fire-app>
+<fire-app>
     <header class="sticky top-0 h-12 bg-blue-400 flex items-center justify-center text-white font-bold text-xl px-4 py-3 z-10">
-      <div class="h-full w-full flex flex-row justify-between">
-        <div></div>
-        <input type="hidden" id="content" value="test"/>
-        <a href="/">Google doc</a>
-        <auth-nav></auth-nav>
-      </div>
+        <div class="h-full w-full flex flex-row justify-between">
+            <div></div>
+            <input type="hidden" id="content" value=""/>
+            <a href="/">Google doc</a>
+            <auth-nav></auth-nav>
+        </div>
     </header>
-  </fire-app>
+</fire-app>
 
-  <script src="./app.js" type="module"></script>
-  <script src="./fire-app.js" type="module"></script>
-  <script src="./components/auth-nav.js" type="module"></script>
-  <script>
+<script src="./app.js" type="module"></script>
+<script src="./fire-app.js" type="module"></script>
+<script src="./components/auth-nav.js" type="module"></script>
+<script>
     function setupEditor(editor) {
-      editor.on('keypress', function (e) {
-        let content = '';
-        e.target.childNodes.forEach((node) => {
-            content += node.outerHTML;
+        editor.on('keypress', function (e) {
+            let content = '';
+            e.target.childNodes.forEach((node) => {
+                content += node.outerHTML;
+            });
+            document.getElementById('content').value = content;
         });
-        document.getElementById('content').value = content;
-      });
     }
-  </script>
+</script>
 
-   <script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-webcomponent@1/dist/tinymce-webcomponent.min.js"></script>
 </body>
 </html>
