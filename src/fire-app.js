@@ -48,6 +48,7 @@ class FireApp extends Base {
         super();
         this.docs = [];
         this.doc = {};
+        this.unsubscribe = () => {};
 
         document.addEventListener("page-changed", ({detail}) => {
             this.page = detail.name;
@@ -58,6 +59,7 @@ class FireApp extends Base {
 
     firstUpdated() {
         this.page = document.$route.name;
+
     }
 
     handleCreateDoc({detail}) {
@@ -99,13 +101,6 @@ class FireApp extends Base {
                 return this.getListPage();
             case "doc":
                 this.doc = null;
-
-                subscribeDoc(
-                    `/docs/${document.$route.params.docId}`,
-                    (doc) => {
-                        this.doc = doc;
-                    }
-                );
                 return this.getDocPage();
             case "register":
                 return this.getRegisterPage();

@@ -2,6 +2,8 @@ import {html} from "lit";
 import Base from "../Base.js";
 import 'pell/dist/pell.css';
 import { init } from 'pell'
+import { position } from 'https://cdn.skypack.dev/caret-pos';
+import {subscribeDoc} from "../firebase";
 
 class FireDoc extends Base {
     static get properties() {
@@ -16,30 +18,48 @@ class FireDoc extends Base {
         super();
         this.doc = {};
         this.editor = null;
+        this.caret = { pos: 0 };
+        let timeout = null;
     }
 
     firstUpdated() {
-        let timeout;
         this.editor = init({
             element: this.querySelector('#editor'),
             onChange: html => {
-                clearTimeout(timeout);
-                timeout = setTimeout(this.handleForm(html), 300);
+                this.handleForm(html);
             },
-        })
+        });
 
-        this.editor.content.innerHTML = this.doc ? this.doc.content : null;
+        subscribeDoc(
+            `/docs/${document.$route.params.docId}`,
+            (doc) => {
+                this.doc = doc;
+
+                this.editor.content.innerHTML = this.doc ? this.doc.content : null;
+                position(this.editor.content, this.caret.pos);
+            }
+        );
 
     }
 
     handleForm(html) {
-        this.doc.content = html;
+        const brElements = this.editor.content.querySelectorAll("div > br");
+        const newLine = brElements > 0;
 
-        this.dispatchEvent(
+        brElements.forEach(function(br) {
+            br.parentNode.appendChild(document.createTextNode("\u200c"));
+            br.remove();
+        });
+
+        this.doc.content = html;
+        this.caret.pos = newLine ? position(this.editor.content).pos : position(this.editor.content).pos++;
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => this.dispatchEvent(
             new CustomEvent("create-doc", {
                 detail: this.doc,
             })
-        );
+        ), 300);
     }
 
     render() {

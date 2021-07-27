@@ -32,6 +32,7 @@ page("/logout", (ctx) => {
 });
 
 page("/:docId", (ctx) => {
+    console.log('plop')
     ctx.name = "doc";
     document.$route = ctx;
     document.dispatchEvent(new CustomEvent("page-changed", {detail: ctx}));

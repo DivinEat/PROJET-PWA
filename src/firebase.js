@@ -50,9 +50,10 @@ export function subscribeList(path = "/", cb = () => {
 export function subscribeDoc(path = "/", cb = () => {
 }) {
     const database = firebase.database();
-    database.ref(path)
+    return database.ref(path)
         .on('value', (snapshot) => {
-            cb(snapshot.val());
+            if(snapshot)
+                cb(snapshot.val());
         });
 }
 
