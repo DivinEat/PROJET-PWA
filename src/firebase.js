@@ -4,6 +4,7 @@ import page from "page";
 
 import "firebase/database";
 import "firebase/auth";
+import {getTodo, initDB, setTodo} from "./idb";
 
 
 export function initFirebase() {
@@ -55,6 +56,18 @@ export function subscribeDoc(path = "/", cb = () => {
             if(snapshot)
                 cb(snapshot.val());
         });
+    // return database.ref(path)
+    //     .on('value', async (snapshot) => {
+    //         if(snapshot) {
+    //             const data = await setTodo({
+    //                 id: path,
+    //                 ...snapshot.val()
+    //             });
+    //             cb(data);
+    //         }
+    //         else
+    //             cb(getTodo(path))
+    //     });
 }
 
 export function pushData(path = "/", data) {

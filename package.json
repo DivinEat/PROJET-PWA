@@ -20,6 +20,7 @@
   "dependencies": {
     "@tinymce/tinymce-webcomponent": "^1.2.0",
     "firebase": "^8.7.0",
+    "idb": "^3.0.2",
     "lit": "^2.0.0-rc.2",
     "page": "^1.11.6",
     "pell": "^1.0.6"
