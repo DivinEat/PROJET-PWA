@@ -52,6 +52,8 @@ class FireApp extends Base {
         document.addEventListener("page-changed", ({detail}) => {
             this.page = detail.name;
         });
+
+        document.addEventListener('remove-doc', this.handleRemoveDoc);
     }
 
     firstUpdated() {
@@ -63,8 +65,9 @@ class FireApp extends Base {
         page(`/${id}`);
     }
 
-    handleRemoveDoc({detail}) {
-        removeData(`/docs/`, detail.id);
+    handleRemoveDoc({ detail: id }) {
+        console.log('ça marche');
+        removeData(`/docs/`, id);
     }
 
     handleCreateMessage({detail}) {
@@ -131,7 +134,6 @@ class FireApp extends Base {
             <fire-list
                     .docs="${this.docs}"
                     @create-doc=${this.handleCreateDoc}
-                    @remove-doc=${this.handleRemoveDoc}
             ></fire-list>`;
     }
 

@@ -35,7 +35,6 @@ export function subscribeList(path = "/", cb = () => {
         .ref()
         .child(path)
         .on("child_added", (data) => {
-            console.log("Child added");
             list.push(data);
             cb(list);
         });
@@ -43,7 +42,6 @@ export function subscribeList(path = "/", cb = () => {
         .ref()
         .child(path)
         .on("child_removed", (data) => {
-            console.log("Child removed");
             list = list.filter((item) => item.key !== data.key);
             cb(list);
         });
@@ -67,7 +65,7 @@ export function pushData(path = "/", data) {
 
 export function removeData(path = "/", id) {
     const database = firebase.database();
-    database.ref(`${path}/${id}`).remove().then((data) => console.log(data));
+    database.ref(`${path}/${id}`).remove();
 }
 
 export function setData(path = "/", data) {

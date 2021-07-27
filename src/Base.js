@@ -1,4 +1,4 @@
-import {LitElement} from "https://cdn.skypack.dev/lit";
+import {LitElement} from "lit";
 
 export default class Base extends LitElement {
     constructor() {

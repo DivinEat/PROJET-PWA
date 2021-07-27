@@ -22,11 +22,13 @@ class DocCard extends Base {
         this.doc = {};
     }
 
-    removeDoc(e) {
-        e.preventDefault();
+    removeDoc(id) {
 
-        this.dispatchEvent(
-            new CustomEvent("remove-doc", {detail: this.doc})
+        console.log("remove");
+        console.log(this.doc);
+
+        document.dispatchEvent(
+            new CustomEvent("remove-doc", { detail: id })
         );
     }
 
@@ -35,8 +37,8 @@ class DocCard extends Base {
         return html`
             <div>
                 <a
-                        class="no-underline flex items-center justify-between bg-blue-300 rounded-lg px-3 py-6 text-white"
-                        href="/${this.doc.key}"
+                    class="no-underline flex items-center justify-between bg-blue-300 rounded-lg px-3 py-6 text-white"
+                    href="/${this.doc.key}"
                 >
                     <h1 class="text-lg font-medium">${this.doc.val().name}</h1>
                     <svg
@@ -54,6 +56,12 @@ class DocCard extends Base {
                         />
                     </svg>
                 </a>
+                <button
+                    class="ml-4 rounded-lg text-uppercase bg-blue-400 h-full text-center px-3 uppercase text-white font-bold flex justify-center items-center"
+                    @click="${(e) => this.removeDoc(this.doc.key)}"
+                >
+                    Supprimer
+                </button>
             </div>
         `;
     }
