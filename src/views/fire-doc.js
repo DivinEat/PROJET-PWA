@@ -39,7 +39,6 @@ class FireDoc extends Base {
                 position(this.editor.content, this.caret.pos);
             }
         );
-
     }
 
     handleForm(html) {

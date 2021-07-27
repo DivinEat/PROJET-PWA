@@ -1,11 +1,10 @@
-import {LitElement, html, css} from "lit";
+import {html, css} from "lit";
 import page from "page";
 import Base from "./Base.js";
-
+import firebase from "firebase/app";
 
 import {
     subscribeList,
-    subscribeDoc,
     pushData,
     removeData,
     setData,
@@ -48,10 +47,18 @@ class FireApp extends Base {
         super();
         this.docs = [];
         this.doc = {};
-        this.unsubscribe = () => {};
 
         document.addEventListener("page-changed", ({detail}) => {
             this.page = detail.name;
+
+            const allowPages = ["login" , "register"];
+            if(! allowPages.includes(this.page)) {
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (!user) {
+                        window.location.href = "http://localhost:8080/login";
+                    }
+                });
+            }
         });
 
         document.addEventListener('remove-doc', this.handleRemoveDoc);
