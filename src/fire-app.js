@@ -56,7 +56,7 @@ class FireApp extends Base {
             if(! allowPages.includes(this.page)) {
                 firebase.auth().onAuthStateChanged((user) => {
                     if (!user) {
-                        window.location.href = "http://localhost:8080/login";
+                        window.location.href = "https://217.160.64.31/pwa/login";
                     }
                 });
             }
