@@ -11,6 +11,13 @@ class FireDoc extends Base {
             doc: {
                 type: Object,
             },
+            message: {
+                type: String,
+                state: true
+            },
+            messages: {
+                type: Array
+            },
         };
     }
 
@@ -20,13 +27,15 @@ class FireDoc extends Base {
         this.editor = null;
         this.caret = { pos: 0 };
         let timeout = null;
+        this.message = '';
+        this.messages = [];
     }
 
     firstUpdated() {
         this.editor = init({
             element: this.querySelector('#editor'),
             onChange: html => {
-                this.handleForm(html);
+                this.saveDoc(html);
             },
         });
 
@@ -41,7 +50,7 @@ class FireDoc extends Base {
         );
     }
 
-    handleForm(html) {
+    saveDoc(html) {
         const brElements = this.editor.content.querySelectorAll("div > br");
         const newLine = brElements > 0;
 
@@ -61,11 +70,47 @@ class FireDoc extends Base {
         ), 300);
     }
 
+    handleForm(e) {
+        e.preventDefault();
+        if (!this.message) return;
+        this.dispatchEvent(new CustomEvent('create-message', {
+            detail: {
+                message: this.message,
+                createdAt: Date.now()
+            }
+        }))
+
+        this.message = '';
+    }
+
     render() {
         return html`
             <main>
                 <div id="editor" class="pell"></div>
+                
+                <h1 class="text-center m-5">Messages</h1>
+                <ul>
+                    ${this.messages.map(message => html`<li><span>${message.val().message}</span></li>`)}
+                </ul>
             </main>
+            <footer class="h-16 bg-gray-300 fixed bottom-0 inset-x-0">
+                <form @submit="${this.handleForm}" id="addTodo" class="w-full h-full flex justify-between items-center px-4 py-3">
+                    <label class="flex-1" aria-label="Add todo input">
+                        <input
+                                autocomplete="off"
+                                .value="${this.message}"
+                                @input="${e => this.message = e.target.value}"
+                                class="py-3 px-4 rounded-sm w-full h-full"
+                                type="text"
+                                placeholder="Enter a new message ..."
+                                name="message">
+                    </label>
+                    <button
+                            aria-label="Add"
+                            class="ml-4 rounded-lg text-uppercase bg-blue-400 h-full text-center px-3 uppercase text-white font-bold flex justify-center items-center"
+                            type="submit">Add</button>
+                </form>
+            </footer>
         `;
     }
 }

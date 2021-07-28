@@ -47,6 +47,7 @@ class FireApp extends Base {
         super();
         this.docs = [];
         this.doc = {};
+        this.messages = [];
 
         document.addEventListener("page-changed", ({detail}) => {
             this.page = detail.name;
@@ -107,7 +108,13 @@ class FireApp extends Base {
                 });
                 return this.getListPage();
             case "doc":
-                this.doc = null;
+                this.messages = [];
+                subscribeList(
+                    `/messages/${document.$route.params.docId}`,
+                    (message) => {
+                        this.messages = message;
+                    }
+                );
                 return this.getDocPage();
             case "register":
                 return this.getRegisterPage();
@@ -144,6 +151,8 @@ class FireApp extends Base {
             <fire-doc
                     .doc="${this.doc}"
                     @create-doc=${this.handleUpdateDoc}
+                    .messages="${this.messages}"
+                    @create-message=${this.handleCreateMessage}
             ></fire-doc>`;
     }
 
